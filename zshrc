@@ -74,8 +74,13 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-# Hide username@hostname in agnoster theme
-prompt_context() {}
+# Customize prompt context for agnoster theme
+# Show hostname on SSH connections, hide on local machine
+prompt_context() {
+  if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
+    prompt_segment black default "%(!.%{%F{yellow}%}.)%n@%m"
+  fi
+}
 
 # User configuration
 
