@@ -20,6 +20,7 @@ die()     { echo -e "${RED}[error]${RESET} $*" >&2; exit 1; }
 
 # ── config ────────────────────────────────────────────────────────────────────
 DOTFILES_REPO="${DOTFILES_REPO:-https://github.com/rtdean93/dotfiles.git}"
+DOTFILES_BRANCH="${DOTFILES_BRANCH:-main}"
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
 INSTALL_ARGS=("$@")
 
@@ -44,10 +45,12 @@ ensure_bootstrap_deps() {
 get_dotfiles() {
   if [[ -d "$DOTFILES_DIR/.git" ]]; then
     info "Dotfiles already cloned, pulling latest..."
-    git -C "$DOTFILES_DIR" pull --ff-only
+    git -C "$DOTFILES_DIR" fetch origin
+    git -C "$DOTFILES_DIR" checkout "$DOTFILES_BRANCH"
+    git -C "$DOTFILES_DIR" pull --ff-only origin "$DOTFILES_BRANCH"
   else
-    info "Cloning dotfiles from $DOTFILES_REPO..."
-    git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
+    info "Cloning dotfiles from $DOTFILES_REPO (branch: $DOTFILES_BRANCH)..."
+    git clone -b "$DOTFILES_BRANCH" "$DOTFILES_REPO" "$DOTFILES_DIR"
   fi
   success "Dotfiles at $DOTFILES_DIR"
 }
