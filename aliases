@@ -1,0 +1,25 @@
+# navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ll='ls -lah --color=auto'
+alias la='ls -A --color=auto'
+alias l='ls -CF --color=auto'
+
+# git
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git log --oneline --graph --decorate -20'
+alias gd='git diff'
+alias gco='git checkout'
+alias gb='git branch'
+
+# safety
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# network
+alias myip='curl -s ifconfig.me && echo'
+alias ports='ss -tulnp 2>/dev/null || netstat -tulnp'

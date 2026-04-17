@@ -1,84 +1,77 @@
-# Dotfiles
+# dotfiles
 
-My personal dotfiles for Zsh configuration, synced across macOS and Ubuntu machines.
+Shell environment for macOS and Linux — starship prompt, oh-my-zsh, common aliases.
 
-## Features
+## What's included
 
-- Oh My Zsh configuration with agnoster theme
-- Username/hostname hidden in prompt for cleaner look
-- Git plugin enabled
+| File | Purpose |
+|------|---------|
+| `zshrc` | Zsh config (oh-my-zsh + starship) |
+| `starship.toml` | Prompt: multi-line, git status, language versions |
+| `aliases` | Common git/nav/network shortcuts |
+| `install.sh` | Symlinks files + installs dependencies |
+| `setup.sh` | One-liner bootstrap for new servers |
 
-## Prerequisites
+## New server (one command)
 
-### macOS
 ```bash
-# Install Oh My Zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+curl -fsSL https://raw.githubusercontent.com/rtdean93/dotfiles/main/setup.sh | bash
 ```
 
-### Ubuntu
+Or with SSH access to the repo:
+
 ```bash
-# Install Zsh
-sudo apt update
-sudo apt install zsh -y
-
-# Install Oh My Zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-# Set Zsh as default shell
-chsh -s $(which zsh)
+DOTFILES_REPO=git@github.com:rtdean93/dotfiles.git \
+  curl -fsSL https://raw.githubusercontent.com/rtdean93/dotfiles/main/setup.sh | bash
 ```
 
-## Installation
+## Already have the repo cloned?
 
-1. Clone this repository:
-```bash
-git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/dotfiles
-```
-
-2. Run the installation script:
 ```bash
 cd ~/dotfiles
-./install.sh
+bash install.sh
 ```
 
-3. Reload your shell:
+Skip dependency installation (already set up):
+
 ```bash
-source ~/.zshrc
+bash install.sh --skip-deps
 ```
 
-## What Gets Installed
+## Manual steps
 
-The `install.sh` script will:
-- Backup your existing dotfiles to `~/dotfiles_old`
-- Create symlinks from your home directory to the dotfiles in `~/dotfiles`
+```bash
+git clone https://github.com/rtdean93/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+bash install.sh
+exec zsh
+```
+
+## Supported systems
+
+- Ubuntu / Debian (apt)
+- CentOS / RHEL / Fedora (dnf / yum)
+- Alpine (apk)
+- Arch (pacman)
+- macOS (brew)
+
+## Prompt preview
+
+```
+~/NoLimitzLab/SWE-AF on ⌥main !(2) via 🐍 v3.12.6
+|→ _
+```
+
+- **Directory** — bold cyan, truncated to 3 segments
+- **Branch** — `⌥branch-name` in yellow
+- **Git status** — red indicators for modified/staged/untracked
+- **Language** — Python, Node, Go, Rust version shown automatically
+- **Arrow** — `|→` green on success, red on error
 
 ## Updating
 
-To update your dotfiles:
-
-1. Make changes to the files in `~/dotfiles`
-2. Commit and push:
-```bash
-cd ~/dotfiles
-git add .
-git commit -m "Update dotfiles"
-git push
-```
-
-3. On other machines, pull the changes:
 ```bash
 cd ~/dotfiles
 git pull
-source ~/.zshrc
+# symlinks already point here, no reinstall needed
 ```
-
-## Files Included
-
-- `zshrc` - Zsh configuration with Oh My Zsh and agnoster theme
-- `install.sh` - Installation script for setting up symlinks
-
-## Notes
-
-- The agnoster theme requires a Powerline-patched font for best display
-- Recommended fonts: Meslo, Source Code Pro, or Fira Code with Nerd Font patches
